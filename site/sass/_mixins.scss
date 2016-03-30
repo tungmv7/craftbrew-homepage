@@ -1,0 +1,271 @@
+//=========================================================
+//		MIXINS
+//=========================================================
+
+// ----- Media size ---------------------------------------
+@mixin media-size($xs-size, $sm-size:$xs-size, $md-size:$sm-size, $lg-size:$md-size, $property:"font-size") {
+
+	@if (unit($xs-size)=="") { $xs-size: $xs-size*1px; }
+	@if (unit($sm-size)=="") { $sm-size: $sm-size*1px; }
+	@if (unit($md-size)=="") { $md-size: $md-size*1px; }
+	@if (unit($lg-size)=="") { $lg-size: $lg-size*1px; }
+
+	#{$property}: $xs-size;
+
+	@if ($sm-size != $xs-size) {
+		@media screen and (min-width: 768px) {
+			#{$property}: $sm-size;  
+		}
+	}
+
+	@if ($md-size != $sm-size) {
+		@media screen and (min-width: 992px) {
+			#{$property}: $md-size;  
+		}
+	}
+
+	@if ($lg-size != $md-size) {
+		@media screen and (min-width: 1200px) {
+			#{$property}: $lg-size;  
+		}
+	}
+
+}
+
+@mixin media-size-relative($size, $md-mod:1, $sm-mod:1, $xs-mod:1, $property:"font-size") {
+
+	$lg-size: ($size/$root-lg)*1rem;
+	$md-size: $lg-size*$md-mod;
+	$sm-size: $md-size*$sm-mod;
+	$xs-size: $sm-size*$xs-mod;
+
+	#{$property}: $xs-size;
+
+	@if ($sm-size != $xs-size) {
+		@media screen and (min-width: 768px) {
+			#{$property}: $sm-size;  
+		}
+	}
+
+	@if ($md-size != $sm-size) {
+		@media screen and (min-width: 992px) {
+			#{$property}: $md-size;  
+		}
+	}
+
+	@if ($lg-size != $md-size) {
+		@media screen and (min-width: 1200px) {
+			#{$property}: $lg-size;  
+		}
+	}
+
+}
+
+// ----- Button -------------------------------------------
+@mixin button($size:22, $width:44, $height:44, $side-inset:null) {
+
+	display: inline-block;
+
+	min-width: ($width/$size)*1em;
+	height: ($height/$size)*1em;
+	line-height: 1.2;
+
+	$padding-top: (floor(($height - $size*1.2)/2)/$size)*1em;
+	$padding-bottom: (ceil(($height - $size * 1.2)/2)/$size)*1em;
+	@if ($side-inset == null) { $side-inset: $padding-top}
+	@else {$side-inset: ($side-inset/$size) * 1em}
+
+	padding:  $padding-top $side-inset $padding-bottom;
+
+	text-align: center;
+
+}
+
+// ----- Rounded item -------------------------------------
+@mixin rounded-item($size:22, $diameter:44, $rounding:.5) {
+
+	display: inline-block;
+
+	width: ($diameter/$size)*1em;
+	height: ($diameter/$size)*1em;
+	line-height: ($diameter/$size)*1em;
+
+	text-align: center;
+
+	border-radius: $rounding*100%;
+
+}
+
+// ----- Clearfix -----------------------------------------
+@mixin clearfix {
+	
+	&:before,
+	&:after {
+		display: table;
+		content: "";
+		line-height: 0;
+	}
+
+	&:after {
+		clear: both;
+	}
+
+}
+
+// ----- Triangle -----------------------------------------
+@mixin triangle($dir, $w, $h, $clr) {
+
+	width: 0;
+	height: 0;
+	border-style: solid;
+
+	@if $dir == top {
+		border-width: 0 $w/2 $h $w/2;
+		border-color: transparent transparent $clr transparent;
+	} @else if $dir == bottom {
+		border-width: $h $w/2 0 $w/2;
+		border-color: $clr transparent transparent transparent;
+	} @else if $dir == left {
+		border-width: $h/2 $w $h/2 0;
+		border-color: transparent $clr transparent transparent;
+	} @else if $dir == right {
+		border-width: $h/2 0 $h/2 $w;
+		border-color: transparent transparent transparent $clr;
+	} @else if $dir == top_left {
+		border-width: $w $w 0 0;
+		border-color: $clr transparent transparent transparent;
+	} @else if $dir == top_right {
+		border-width: 0 $w $w 0;
+		border-color: transparent $clr transparent transparent;
+	} @else if $dir == bottom_right {
+		border-width: 0 0 $w $w;
+		border-color: transparent transparent $clr transparent;
+	} @else if $dir == bottom_left {
+		border-width: $w 0 0 $w;
+		border-color: transparent transparent transparent $clr;
+	}
+
+}
+
+// ----- Clip ---------------------------------------------
+@mixin clip($x1, $x2, $y1, $y2){
+	clip: rect($y1,$x2,$y2,$x1);
+}
+
+// ----- Hide text ----------------------------------------
+@mixin hide-text {
+	font: 0/0 a;
+	text-shadow: none;
+	color: transparent;
+}
+
+
+//=========================================================
+//		PREFIXES
+//=========================================================
+
+@mixin keyframes($value) {
+
+	@-webkit-keyframes #{$value} {
+		@content;
+	}
+
+	@keyframes #{$value} {
+		@content;
+	}
+
+}
+
+@mixin animation($value) {
+	-webkit-animation: $value;
+	animation: $value;
+}
+
+@mixin transform-origin($value) {
+	-ms-transform-origin: $value;
+	-webkit-transform-origin: $value;
+	transform-origin: $value;
+}
+
+@mixin transform($value) {
+	-ms-transform: $value;
+	-webkit-transform: $value;
+	transform: $value;
+}
+
+@mixin user-select($value: none) {
+	-webkit-user-select: $value;
+	-moz-user-select: $value;
+	-ms-user-select: $value;
+	user-select: $value;
+}
+
+
+//=========================================================
+//		VARIABLES
+//=========================================================
+
+$fa: 'FontAwesome';
+
+// Angle
+$fa-angle-left: '\f104';
+$fa-angle-right: '\f105';
+$fa-angle-down: '\f107';
+$fa-angle-up: '\f106';
+
+// Arrow Circle
+$fa-arrow-circle-down: '\f0ab';
+$fa-arrow-circle-top: '\f0aa';
+$fa-arrow-circle-left: '\f0a8';
+$fa-arrow-circle-right: '\f0a9';
+
+// Caret
+$fa-caret-down: '\f0d7';
+$fa-caret-right: '\f0da';
+$fa-caret-left: '\f0d9';
+$fa-caret-up: '\f0d8';
+
+// Chevron
+$fa-chevron-left: '\f053';
+$fa-chevron-right: '\f054';
+$fa-chevron-up: '\f077';
+$fa-chevron-down: '\f078';
+
+// Other
+$fa-search: '\f002';
+$fa-close: '\f00d';
+$fa-expand: '\f065';
+$fa-play-circle: '\f144';
+$fa-play-circle-o: '\f01d';
+$fa-play: '\f04b';
+$fa-youtube-play: '\f16a';
+$fa-link: '\f0c1';
+$fa-envelope: '\f0e0';
+$fa-mobile: '\f10b';
+$fa-map-marker: '\f041';
+$fa-comments: '\f086';
+$fa-comments-o: '\f0e6';
+$fa-cogs: '\f085';
+$fa-cog: '\f013';
+$fa-eye: '\f06e';
+$fa-external-link: '\f08e';
+$fa-photo: '\f03e';
+$fa-volume-off: '\f026';
+$fa-volume-up: '\f028';
+$fa-volume-down: '\f027';
+$fa-users: '\f0c0';
+$fa-times: '\f00d';
+$fa-star: '\f005';
+$fa-stop: '\f04d';
+$fa-pause: '\f04c';
+$fa-check-square-o: '\f046';
+$fa-desktop: '\f108';
+$fa-cubes: '\f1b3';
+$fa-bolt: '\f0e7';
+$fa-bullhorn: '\f0a1';
+$fa-book: '\f02d';
+$fa-gears: '\f085';
+$fa-codepen: '\f1cb';
+$fa-plus: '\f067';
+$fa-thumbs-o-up: '\f087';
+$fa-quote-left: '\f10d';

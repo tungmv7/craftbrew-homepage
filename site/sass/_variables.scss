@@ -1,0 +1,60 @@
+//========================================================
+//                     Variables
+//=========================================================
+
+// Schemes ================================================
+
+$scheme-1: (
+	primary: #343434,
+	secondary: #757575
+);
+
+$scheme-2: (
+	primary: #009688,
+	secondary: #CDDC39
+);
+
+$scheme-3: (
+	primary: #9575CD,
+	secondary: #FFC107
+);
+
+$scheme-4: (
+	primary: #FF5722,
+	secondary: #4FC3F7
+);
+
+$schemes: ($scheme-1, $scheme-2, $scheme-3, $scheme-4);
+
+//=========================================================
+
+
+
+// Main variables =========================================
+
+$root-lg:  100;
+$root-md:  90;
+$root-sm:  80;
+$root-xs:  70;
+
+$default-color: 		#777;
+$primary-color: 		#1793c1;
+$secondary-color: 		#333;
+$additional-color-1: 	#009688;
+
+$font-1: 'Roboto', sans-serif;
+$font-2: 'Bevan', cursive;
+
+$body-font: $font-1;
+$body-font-size: 14;
+$body-font-height: 20px;
+$body-font-weight: 400;
+
+$header-background: #fff;
+$main-background: #fff;
+$footer-background: #333;
+
+$body-color: $default-color;
+$body-background: $footer-background;
+
+//=========================================================
